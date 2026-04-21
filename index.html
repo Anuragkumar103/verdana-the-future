@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Verdana – A premium sustainability and clean-air initiative by Anurag Kumar. Breathe better, live greener, sustain longer." />
+  <meta name="keywords" content="sustainability, clean air, eco-friendly, green living, environment, Anurag Kumar" />
+  <meta name="author" content="Anurag Kumar" />
+  <meta property="og:title" content="Verdana | Breathe the Future" />
+  <meta property="og:description" content="A premium sustainability and clean-air initiative committed to a greener planet." />
+  <meta property="og:type" content="website" />
+  <title>Verdana | Breathe the Future</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ──────────────── RESET & BASE ──────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --forest:    #0d2818;
+      --deep:      #1a4a2e;
+      --rich:      #2d6a4f;
+      --mid:       #40916c;
+      --fresh:     #52b788;
+      --light:     #95d5b2;
+      --pale:      #d8f3dc;
+      --cream:     #f4ede0;
+      --sand:      #e8d5b5;
+      --bark:      #8b6914;
+      --white:     #fafaf7;
+      --leaf-gold: #c9a84c;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Jost', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--forest);
+      overflow-x: hidden;
+      cursor: none;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: none; }
+
+    /* ──────────────── CUSTOM CURSOR ──────────────── */
+    #cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--fresh);
+      border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s;
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--fresh);
+      border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.18s cubic-bezier(.25,.46,.45,.94);
+      opacity: 0.6;
+    }
+    body:hover #cursor-dot { opacity: 1; }
+
+    /* ──────────────── LOADING SCREEN ──────────────── */
+    #loader {
+      position: fixed; inset: 0;
+      background: var(--forest);
+      z-index: 9000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-plant {
+      position: relative;
+      width: 80px; height: 120px;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .loader-stem {
+      width: 3px;
+      background: linear-gradient(to top, var(--bark), var(--mid));
+      border-radius: 2px;
+      transform-origin: bottom center;
+      animation: growStem 1.8s ease forwards;
+      height: 0;
+    }
+    @keyframes growStem {
+      0%   { height: 0; }
+      100% { height: 90px; }
+    }
+    .loader-leaf {
+      position: absolute;
+      width: 28px; height: 22px;
+      background: var(--fresh);
+      border-radius: 0 100% 0 100%;
+      opacity: 0;
+      transform-origin: left bottom;
+    }
+    .loader-leaf.l1 { bottom: 55px; left: 3px; animation: leafGrow 0.4s 1.2s ease forwards; transform: rotate(-30deg); }
+    .loader-leaf.l2 { bottom: 72px; right: 3px; animation: leafGrow 0.4s 1.5s ease forwards; transform: rotate(30deg) scaleX(-1); }
+    .loader-leaf.l3 { bottom: 85px; left: 2px; width: 22px; height: 18px; animation: leafGrow 0.4s 1.7s ease forwards; transform: rotate(-20deg); }
+    @keyframes leafGrow {
+      from { opacity: 0; transform: scale(0) rotate(-60deg); }
+      to   { opacity: 1; transform: scale(1) rotate(var(--r, -30deg)); }
+    }
+    .loader-leaf.l1 { --r: -30deg; }
+    .loader-leaf.l2 { --r: 30deg; }
+    .loader-leaf.l3 { --r: -20deg; }
+    .loader-text {
+      margin-top: 28px;
+      font-family: var(--font-display);
+      color: var(--pale);
+      font-size: 2rem;
+      letter-spacing: 0.3em;
+      opacity: 0;
+      animation: fadeUp 0.6s 2s ease forwards;
+    }
+    .loader-sub {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      color: var(--light);
+      opacity: 0;
+      animation: fadeUp 0.6s 2.2s ease forwards;
+      text-transform: uppercase;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ──────────────── NAVBAR ──────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 800;
+      padding: 0 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(13,40,24,0.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 2px 30px rgba(0,0,0,0.25);
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--pale);
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo-icon { font-size: 1.3rem; animation: sway 3s ease-in-out infinite; }
+    @keyframes sway { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+    .nav-links {
+      display: flex; gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--pale);
+      opacity: 0.8;
+      transition: opacity 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--fresh);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      padding: 9px 22px;
+      border: 1px solid var(--fresh);
+      border-radius: 2px;
+      color: var(--fresh) !important;
+      opacity: 1 !important;
+      transition: all 0.3s !important;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .nav-cta:hover { background: var(--fresh) !important; color: var(--forest) !important; }
+    .nav-cta::after { display: none !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: none; }
+    .hamburger span { width: 24px; height: 2px; background: var(--pale); border-radius: 1px; transition: all 0.3s; }
+
+    /* ──────────────── FLOATING LEAVES ──────────────── */
+    .leaves-bg {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .fl {
+      position: absolute;
+      opacity: 0;
+      animation: floatLeaf linear infinite;
+    }
+    .fl svg { width: 100%; height: 100%; }
+    @keyframes floatLeaf {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      5%   { opacity: 0.4; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ──────────────── SECTIONS ──────────────── */
+    section { position: relative; z-index: 1; }
+
+    /* ──────────────── HERO ──────────────── */
+    #home {
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--forest) 0%, var(--deep) 45%, #1e3a2a 100%);
+      display: flex; align-items: center;
+      overflow: hidden;
+      padding: 0 5vw;
+    }
+    .hero-bg-pattern {
+      position: absolute; inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(82,183,136,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(149,213,178,0.06) 0%, transparent 40%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0;
+      background-image: 
+        linear-gradient(rgba(82,183,136,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(82,183,136,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 700px;
+      padding-top: 72px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid rgba(82,183,136,0.35);
+      border-radius: 100px;
+      color: var(--fresh);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 3s ease forwards;
+    }
+    .hero-badge-dot { width: 6px; height: 6px; background: var(--fresh); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.6);opacity:0.5} }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 0.8s 3.2s ease forwards;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--fresh);
+      display: block;
+    }
+    .hero-sub {
+      margin-top: 1.8rem;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(212,243,220,0.7);
+      max-width: 520px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s 3.5s ease forwards;
+    }
+    .hero-actions {
+      margin-top: 3rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 3.7s ease forwards;
+    }
+    .btn-primary {
+      padding: 14px 36px;
+      background: var(--fresh);
+      color: var(--forest);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--light);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(82,183,136,0.3); }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-outline {
+      padding: 14px 36px;
+      background: transparent;
+      color: var(--pale);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid rgba(212,243,220,0.3);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover { border-color: var(--pale); background: rgba(212,243,220,0.05); transform: translateY(-2px); }
+    .hero-stats {
+      margin-top: 4rem;
+      display: flex; gap: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 4s ease forwards;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--fresh);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(212,243,220,0.55);
+      margin-top: 4px;
+    }
+    .hero-visual {
+      position: absolute;
+      right: -5vw; bottom: 0;
+      width: 50vw; max-width: 680px;
+      height: 100%;
+      display: flex; align-items: flex-end;
+      pointer-events: none;
+    }
+    .hero-forest-svg {
+      width: 100%; height: auto;
+      opacity: 0;
+      animation: fadeUp 1.2s 3.4s ease forwards;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.6s 4.2s ease forwards;
+    }
+    .scroll-hint span {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(212,243,220,0.4);
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, rgba(82,183,136,0.6), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{transform:scaleY(1);opacity:0.6} 50%{transform:scaleY(0.5);opacity:1} }
+
+    /* ──────────────── MARQUEE BAND ──────────────── */
+    .marquee-band {
+      background: var(--fresh);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marqueeScroll 28s linear infinite;
+    }
+    .marquee-inner span {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--forest);
+      padding: 0 3rem;
+    }
+    .marquee-inner span::before { content: '⬡'; margin-right: 1rem; opacity: 0.5; }
+    @keyframes marqueeScroll { from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+
+    /* ──────────────── ABOUT ──────────────── */
+    #about {
+      padding: 120px 5vw;
+      background: var(--white);
+    }
+    .section-label {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 30px; height: 1px;
+      background: var(--mid);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-weight: 300;
+      line-height: 1.12;
+      color: var(--forest);
+    }
+    .section-title strong { font-weight: 600; color: var(--rich); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-top: 70px;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-img-frame {
+      width: 100%; aspect-ratio: 3/4;
+      background: linear-gradient(135deg, var(--deep) 0%, var(--rich) 60%, var(--fresh) 100%);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-img-frame::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(149,213,178,0.2) 0%, transparent 60%);
+    }
+    .about-leaf-large {
+      position: absolute;
+      font-size: 14rem;
+      opacity: 0.12;
+      transform: rotate(-25deg);
+    }
+    .about-circle-accent {
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 100px; height: 100px;
+      border: 2px solid rgba(82,183,136,0.25);
+      border-radius: 50%;
+    }
+    .about-circle-accent::before {
+      content: '';
+      position: absolute; top: 15px; left: 15px;
+      right: 15px; bottom: 15px;
+      border: 1px solid rgba(82,183,136,0.15);
+      border-radius: 50%;
+    }
+    .about-text-block {}
+    .about-intro {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--deep);
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--fresh);
+      padding-left: 1.5rem;
+    }
+    .about-body {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: #4a5a50;
+      margin-bottom: 1.5rem;
+    }
+    .about-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .pillar {
+      padding: 1.2rem;
+      border: 1px solid rgba(64,145,108,0.18);
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    .pillar:hover { border-color: var(--fresh); background: rgba(82,183,136,0.04); transform: translateY(-3px); }
+    .pillar-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .pillar-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--deep);
+      text-transform: uppercase;
+    }
+    .pillar-desc { font-size: 0.82rem; color: #6a7a70; margin-top: 4px; line-height: 1.5; }
+
+    /* ──────────────── FEATURES / SERVICES ──────────────── */
+    #services {
+      padding: 120px 5vw;
+      background: var(--forest);
+      overflow: hidden;
+      position: relative;
+    }
+    #services::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(82,183,136,0.07) 0%, transparent 60%);
+    }
+    #services .section-label { color: var(--fresh); }
+    #services .section-label::before { background: var(--fresh); }
+    #services .section-title { color: var(--pale); }
+    #services .section-title strong { color: var(--light); }
+    .services-intro {
+      font-size: 1rem;
+      color: rgba(212,243,220,0.6);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-top: 1rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      margin-top: 60px;
+      border: 1.5px solid rgba(82,183,136,0.15);
+    }
+    .service-card {
+      padding: 3rem 2.5rem;
+      border: 1.5px solid rgba(82,183,136,0.1);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      background: rgba(13,40,24,0.4);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--fresh), var(--light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .service-card:hover { background: rgba(82,183,136,0.06); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--mid);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+    }
+    .service-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      display: block;
+      transition: transform 0.3s;
+    }
+    .service-card:hover .service-icon { transform: translateY(-5px) scale(1.1); }
+    .service-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 400;
+      color: var(--pale);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .service-desc {
+      font-size: 0.88rem;
+      color: rgba(212,243,220,0.55);
+      line-height: 1.75;
+    }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fresh);
+      transition: gap 0.3s;
+    }
+    .service-link:hover { gap: 14px; }
+
+    /* ──────────────── IMPACT COUNTER ──────────────── */
+    #impact {
+      padding: 100px 5vw;
+      background: var(--pale);
+    }
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: rgba(64,145,108,0.12);
+    }
+    .impact-card {
+      background: var(--pale);
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .impact-card:hover { background: var(--white); }
+    .impact-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 600;
+      color: var(--rich);
+      line-height: 1;
+    }
+    .impact-num sup { font-size: 2rem; vertical-align: top; margin-top: 0.5rem; display: inline-block; }
+    .impact-unit {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--fresh);
+    }
+    .impact-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 0.8rem;
+    }
+
+    /* ──────────────── MANIFESTO PARALLAX ──────────────── */
+    #manifesto {
+      padding: 140px 5vw;
+      background: linear-gradient(to bottom, var(--deep), var(--rich));
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .manifesto-bg-leaf {
+      position: absolute;
+      font-size: 28rem;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+    .manifesto-bg-leaf.left { left: -8rem; top: -4rem; transform: rotate(-30deg); }
+    .manifesto-bg-leaf.right { right: -8rem; bottom: -4rem; transform: rotate(150deg); }
+    .manifesto-quote {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--pale);
+      line-height: 1.4;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .manifesto-quote strong { font-style: normal; font-weight: 600; color: var(--fresh); }
+    .manifesto-author {
+      margin-top: 2.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(212,243,220,0.45);
+    }
+
+    /* ──────────────── CONTACT ──────────────── */
+    #contact {
+      padding: 120px 5vw;
+      background: var(--cream);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      margin-top: 60px;
+      align-items: start;
+    }
+    .contact-info {}
+    .contact-tagline {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--deep);
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+    .contact-detail {
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-detail-icon {
+      width: 40px; height: 40px;
+      background: var(--pale);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rich);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .contact-detail-text { font-size: 0.9rem; color: #5a6a60; line-height: 1.6; }
+    .contact-detail-text strong { color: var(--deep); font-weight: 600; display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+    .social-row {
+      display: flex; gap: 1rem;
+      margin-top: 3rem;
+    }
+    .social-btn {
+      width: 44px; height: 44px;
+      border: 1.5px solid rgba(45,106,79,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rich);
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    .social-btn:hover { background: var(--rich); color: var(--pale); border-color: var(--rich); transform: translateY(-3px); }
+    .contact-form-wrap {
+      background: var(--white);
+      padding: 3rem;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(13,40,24,0.08);
+    }
+    .form-row { margin-bottom: 1.5rem; }
+    .form-row label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .form-row input,
+    .form-row textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--pale);
+      border: 1.5px solid transparent;
+      border-radius: 2px;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--forest);
+      transition: all 0.3s;
+      outline: none;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus {
+      border-color: var(--fresh);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(82,183,136,0.1);
+    }
+    .form-row textarea { resize: vertical; min-height: 130px; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--forest);
+      color: var(--pale);
+      border: none;
+      border-radius: 2px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .btn-submit:hover { background: var(--deep); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(13,40,24,0.2); }
+    .btn-submit.loading { pointer-events: none; opacity: 0.7; }
+    .form-msg {
+      margin-top: 1rem;
+      padding: 12px 16px;
+      border-radius: 2px;
+      font-size: 0.85rem;
+      display: none;
+    }
+    .form-msg.success { background: rgba(82,183,136,0.1); border: 1px solid var(--fresh); color: var(--deep); display: block; }
+    .form-msg.error { background: rgba(200,50,50,0.08); border: 1px solid #e57373; color: #b71c1c; display: block; }
+
+    /* ──────────────── CONNECT WITH ME ──────────────── */
+    #connect {
+      padding: 100px 5vw;
+      background: var(--forest);
+      text-align: center;
+    }
+    #connect .section-title { color: var(--pale); }
+    #connect .section-title strong { color: var(--fresh); }
+    .connect-desc {
+      font-size: 0.95rem;
+      color: rgba(212,243,220,0.55);
+      max-width: 500px;
+      margin: 1.5rem auto 3rem;
+      line-height: 1.8;
+    }
+    .connect-cards {
+      display: flex; gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .connect-card {
+      padding: 2.5rem 3.5rem;
+      border: 1.5px solid rgba(82,183,136,0.2);
+      border-radius: 4px;
+      transition: all 0.3s;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      min-width: 200px;
+    }
+    .connect-card:hover { border-color: var(--fresh); background: rgba(82,183,136,0.06); transform: translateY(-6px); }
+    .connect-card-icon { font-size: 2.2rem; color: var(--fresh); }
+    .connect-card-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--pale);
+      font-weight: 600;
+    }
+    .connect-card-handle { font-size: 0.82rem; color: rgba(212,243,220,0.45); }
+
+    /* ──────────────── FOOTER ──────────────── */
+    footer {
+      background: #070f0a;
+      padding: 60px 5vw 30px;
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 2rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(82,183,136,0.1);
+    }
+    .footer-brand { max-width: 320px; }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--pale);
+      margin-bottom: 1rem;
+    }
+    .footer-tagline { font-size: 0.85rem; color: rgba(212,243,220,0.4); line-height: 1.7; }
+    .footer-nav-col {}
+    .footer-col-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--fresh);
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.7rem; }
+    .footer-links a { font-size: 0.85rem; color: rgba(212,243,220,0.45); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--pale); }
+    .footer-bottom {
+      padding-top: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(212,243,220,0.3);
+    }
+    .footer-made {
+      font-size: 0.78rem;
+      color: var(--fresh);
+      letter-spacing: 0.05em;
+    }
+
+    /* ──────────────── SCROLL REVEAL ──────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ──────────────── RESPONSIVE ──────────────── */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 50px; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .impact-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+      .hero-visual { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      nav.menu-open .nav-links {
+        display: flex; flex-direction: column;
+        position: fixed; inset: 0; top: 60px;
+        background: var(--forest);
+        padding: 3rem 5vw;
+        gap: 2rem;
+        align-items: flex-start;
+        z-index: 700;
+      }
+      nav.menu-open .nav-links a { font-size: 1.2rem; }
+      .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger.active span:nth-child(2) { opacity: 0; }
+      .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .services-grid { grid-template-columns: 1fr; }
+      .impact-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { gap: 1.5rem; }
+      .about-pillars { grid-template-columns: 1fr; }
+      .footer-top { flex-direction: column; }
+      .contact-form-wrap { padding: 2rem 1.5rem; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+      #cursor-dot, #cursor-ring { display: none; }
+      body { cursor: default; }
+      button { cursor: pointer; }
+    }
+    @media (max-width: 480px) {
+      .impact-grid { grid-template-columns: 1fr; }
+      .hero-headline { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-plant">
+      <div class="loader-stem"></div>
+      <div class="loader-leaf l1"></div>
+      <div class="loader-leaf l2"></div>
+      <div class="loader-leaf l3"></div>
+    </div>
+    <div class="loader-text">VERDANA</div>
+    <div class="loader-sub">Breathe the Future</div>
+  </div>
+
+  <!-- FLOATING LEAVES BG -->
+  <div class="leaves-bg" id="leavesContainer"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <span class="nav-logo-icon">🌿</span>
+      Verdana
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ══════════ HOME ══════════ -->
+  <section id="home">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Eco Initiative 2025
+      </div>
+      <h1 class="hero-headline">
+        Breathe <em>greener,</em><br>live better.
+      </h1>
+      <p class="hero-sub">
+        Verdana is a premium sustainability initiative redefining how we interact with our natural world — through clean air advocacy, urban greening, and mindful eco-living.
+      </p>
+      <div class="hero-actions">
+        <a href="#about" class="btn-primary"><span>Discover Our Mission</span></a>
+        <a href="#contact" class="btn-outline">Join the Movement</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num" data-target="2400">0</div>
+          <div class="stat-label">Trees Planted</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="18">0<span style="font-size:1rem">k</span></div>
+          <div class="stat-label">Members Worldwide</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="94">0<span>%</span></div>
+          <div class="stat-label">Air Quality Improved</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg class="hero-forest-svg" viewBox="0 0 600 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Trees group -->
+        <g opacity="0.9">
+          <!-- Big tree center -->
+          <rect x="285" y="310" width="30" height="180" fill="#5c3d1e" rx="4"/>
+          <ellipse cx="300" cy="270" rx="90" ry="100" fill="#1a5c35"/>
+          <ellipse cx="300" cy="220" rx="70" ry="80" fill="#2d6a4f"/>
+          <ellipse cx="300" cy="175" rx="50" ry="65" fill="#40916c"/>
+          <ellipse cx="300" cy="135" rx="35" ry="50" fill="#52b788"/>
+          <!-- Left tree -->
+          <rect x="140" y="360" width="22" height="120" fill="#5c3d1e" rx="3"/>
+          <ellipse cx="151" cy="330" rx="60" ry="70" fill="#1a5c35" opacity="0.8"/>
+          <ellipse cx="151" cy="290" rx="45" ry="55" fill="#2d6a4f" opacity="0.8"/>
+          <ellipse cx="151" cy="255" rx="32" ry="42" fill="#40916c" opacity="0.8"/>
+          <!-- Right tree -->
+          <rect x="430" y="350" width="25" height="130" fill="#5c3d1e" rx="3"/>
+          <ellipse cx="443" cy="315" rx="68" ry="75" fill="#1a5c35" opacity="0.75"/>
+          <ellipse cx="443" cy="270" rx="52" ry="60" fill="#2d6a4f" opacity="0.8"/>
+          <ellipse cx="443" cy="225" rx="38" ry="48" fill="#52b788" opacity="0.7"/>
+          <!-- Ground -->
+          <ellipse cx="300" cy="490" rx="250" ry="30" fill="#1a4a2e" opacity="0.5"/>
+          <!-- Grass / bushes -->
+          <ellipse cx="180" cy="475" rx="55" ry="22" fill="#2d6a4f" opacity="0.7"/>
+          <ellipse cx="420" cy="470" rx="65" ry="25" fill="#2d6a4f" opacity="0.6"/>
+          <ellipse cx="300" cy="480" rx="80" ry="20" fill="#40916c" opacity="0.4"/>
+          <!-- Fireflies / particles -->
+          <circle cx="220" cy="200" r="3" fill="#95d5b2" opacity="0.6">
+            <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="380" cy="160" r="2" fill="#d8f3dc" opacity="0.8">
+            <animate attributeName="opacity" values="0.8;0;0.8" dur="2.4s" repeatCount="indefinite" begin="1s"/>
+          </circle>
+          <circle cx="150" cy="300" r="2.5" fill="#52b788" opacity="0.7">
+            <animate attributeName="opacity" values="0.7;0;0.7" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+          </circle>
+          <circle cx="460" cy="260" r="2" fill="#95d5b2" opacity="0.6">
+            <animate attributeName="opacity" values="0.6;0;0.6" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
+          </circle>
+          <!-- Moon glow -->
+          <circle cx="480" cy="80" r="40" fill="rgba(212,243,220,0.08)"/>
+          <circle cx="480" cy="80" r="28" fill="rgba(212,243,220,0.08)"/>
+          <circle cx="480" cy="80" r="16" fill="rgba(212,243,220,0.12)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-band" aria-hidden="true">
+    <div class="marquee-inner" id="marqueeContent">
+      <span>Clean Air Initiative</span>
+      <span>Urban Greening</span>
+      <span>Carbon Neutral</span>
+      <span>Biodiversity Conservation</span>
+      <span>Eco-Friendly Living</span>
+      <span>Sustainable Futures</span>
+      <span>Zero Waste Movement</span>
+      <span>Renewable Energy</span>
+      <span>Clean Air Initiative</span>
+      <span>Urban Greening</span>
+      <span>Carbon Neutral</span>
+      <span>Biodiversity Conservation</span>
+      <span>Eco-Friendly Living</span>
+      <span>Sustainable Futures</span>
+      <span>Zero Waste Movement</span>
+      <span>Renewable Energy</span>
+    </div>
+  </div>
+
+  <!-- ══════════ ABOUT ══════════ -->
+  <section id="about">
+    <div class="section-label reveal">About Verdana</div>
+    <h2 class="section-title reveal">We believe in a <strong>greener tomorrow</strong>,<br>not a distant dream.</h2>
+    <div class="about-grid">
+      <div class="about-visual reveal-left">
+        <div class="about-img-frame">
+          <span class="about-leaf-large">🌿</span>
+          <svg viewBox="0 0 320 440" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:80%; position:relative; z-index:1;">
+            <!-- Illustrated plant in pot -->
+            <rect x="100" y="370" width="120" height="50" rx="8" fill="#5c3d1e" opacity="0.7"/>
+            <rect x="110" y="360" width="100" height="20" rx="4" fill="#7a5230" opacity="0.6"/>
+            <!-- Stem -->
+            <path d="M160 360 Q155 300 145 240 Q140 190 130 140" stroke="#2d6a4f" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M160 360 Q165 310 175 260 Q185 210 195 170" stroke="#40916c" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <!-- Leaves left -->
+            <ellipse cx="118" cy="200" rx="42" ry="22" fill="#52b788" transform="rotate(-35 118 200)" opacity="0.9"/>
+            <ellipse cx="105" cy="280" rx="38" ry="20" fill="#40916c" transform="rotate(-40 105 280)" opacity="0.85"/>
+            <ellipse cx="125" cy="150" rx="35" ry="18" fill="#95d5b2" transform="rotate(-30 125 150)" opacity="0.8"/>
+            <!-- Leaves right -->
+            <ellipse cx="195" cy="220" rx="44" ry="22" fill="#2d6a4f" transform="rotate(30 195 220)" opacity="0.85"/>
+            <ellipse cx="205" cy="165" rx="36" ry="19" fill="#52b788" transform="rotate(25 205 165)" opacity="0.9"/>
+            <!-- Top leaf -->
+            <ellipse cx="155" cy="110" rx="30" ry="55" fill="#40916c" transform="rotate(-10 155 110)" opacity="0.8"/>
+            <ellipse cx="158" cy="105" rx="20" ry="40" fill="#52b788" transform="rotate(-10 158 105)" opacity="0.6"/>
+            <!-- Soil -->
+            <ellipse cx="160" cy="375" rx="50" ry="8" fill="#3a2010" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="about-circle-accent"></div>
+      </div>
+      <div class="about-text-block reveal-right">
+        <p class="about-intro">"Every leaf unfurled is a promise to future generations — we are simply fulfilling that promise, one breath at a time."</p>
+        <p class="about-body">
+          Verdana was born from a singular conviction: that the relationship between humanity and nature doesn't have to be adversarial. We exist at the intersection of modern living and ecological wisdom, bridging the gap between contemporary lifestyles and the natural systems that sustain us.
+        </p>
+        <p class="about-body">
+          Our multidisciplinary team of environmental scientists, urban planners, and community advocates works tirelessly to implement scalable, meaningful solutions — from micro-interventions in urban neighborhoods to broad-scale carbon sequestration programs.
+        </p>
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-icon">🌬️</div>
+            <div class="pillar-title">Clean Air</div>
+            <div class="pillar-desc">Monitoring and improving urban air quality indices across cities.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🌱</div>
+            <div class="pillar-title">Reforestation</div>
+            <div class="pillar-desc">Strategic tree-planting to restore biodiversity and carbon balance.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">♻️</div>
+            <div class="pillar-title">Zero Waste</div>
+            <div class="pillar-desc">Community programs reducing landfill contributions by 70%.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">☀️</div>
+            <div class="pillar-title">Renewable Energy</div>
+            <div class="pillar-desc">Advocating and enabling the transition to clean energy sources.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SERVICES ══════════ -->
+  <section id="services">
+    <div class="section-label reveal">What We Do</div>
+    <h2 class="section-title reveal">Our core <strong>programmes</strong></h2>
+    <p class="services-intro reveal">Six pillars of action, thousands of lives transformed. Each programme is designed to create measurable, lasting impact.</p>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <span class="service-icon">🌳</span>
+        <h3 class="service-title">Urban Forest Corridors</h3>
+        <p class="service-desc">We design and implement continuous green corridors in urban environments, connecting parks and green spaces to create thriving ecological pathways that improve air quality and mental wellbeing.</p>
+        <a href="#contact" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">02</div>
+        <span class="service-icon">💨</span>
+        <h3 class="service-title">Air Quality Monitoring</h3>
+        <p class="service-desc">Our network of real-time IoT sensors maps air pollution at hyperlocal levels, giving communities the data they need to advocate for change and make informed health decisions.</p>
+        <a href="#contact" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">03</div>
+        <span class="service-icon">🌊</span>
+        <h3 class="service-title">Watershed Restoration</h3>
+        <p class="service-desc">Revitalizing river banks and wetlands to restore natural filtration systems, prevent flooding, and support biodiversity — because clean water and clean air are inseparable.</p>
+        <a href="#contact" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">04</div>
+        <span class="service-icon">🏙️</span>
+        <h3 class="service-title">Green Architecture Consulting</h3>
+        <p class="service-desc">Partnering with architects and developers to integrate biophilic design principles, living walls, rooftop gardens, and passive ventilation systems into new constructions.</p>
+        <a href="#contact" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">05</div>
+        <span class="service-icon">🎓</span>
+        <h3 class="service-title">Eco-Education Programs</h3>
+        <p class="service-desc">Immersive school programs, community workshops, and digital learning resources that build ecological literacy and inspire the next generation of environmental stewards.</p>
+        <a href="#contact" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">06</div>
+        <span class="service-icon">🤝</span>
+        <h3 class="service-title">Corporate ESG Partnerships</h3>
+        <p class="service-desc">Helping businesses develop authentic, science-backed ESG strategies that go beyond compliance to create genuine environmental value and strengthen brand reputation.</p>
+        <a href="#contact" class="service-link">Learn more →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ IMPACT ══════════ -->
+  <section id="impact">
+    <div style="text-align:center; margin-bottom: 60px;">
+      <div class="section-label reveal" style="justify-content:center;">Our Impact</div>
+      <h2 class="section-title reveal">Numbers that <strong>matter</strong></h2>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card reveal">
+        <div class="impact-num counter" data-target="2400">0</div>
+        <div class="impact-unit">Trees</div>
+        <div class="impact-label">Planted in 2024</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-num counter" data-target="18000">0</div>
+        <div class="impact-unit">Members</div>
+        <div class="impact-label">Global Community</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-num counter" data-target="94">0<span style="font-family:var(--font-display);font-size:2rem;font-style:italic">%</span></div>
+        <div class="impact-unit">Cleaner Air</div>
+        <div class="impact-label">In Partner Cities</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-num counter" data-target="12">0</div>
+        <div class="impact-unit">Nations</div>
+        <div class="impact-label">Active Projects</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section id="manifesto">
+    <div class="manifesto-bg-leaf left" aria-hidden="true">🍃</div>
+    <div class="manifesto-bg-leaf right" aria-hidden="true">🍃</div>
+    <p class="manifesto-quote reveal">
+      "The Earth does not belong to us — we belong to it. 
+      <strong>Verdana exists to remind us of that truth,</strong> 
+      one green action at a time."
+    </p>
+    <p class="manifesto-author reveal">— Anurag Kumar, Founder</p>
+  </section>
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <section id="contact">
+    <div class="section-label reveal">Get In Touch</div>
+    <h2 class="section-title reveal">Let's grow <strong>together</strong></h2>
+    <div class="contact-grid">
+      <div class="contact-info reveal-left">
+        <p class="contact-tagline">"Every partnership, every conversation, every idea shared is a seed planted for a greener world."</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-detail-text">
+            <strong>Email Us</strong>
+            luckyanurag9045@gmail.com
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="contact-detail-text">
+            <strong>Base of Operations</strong>
+            Lucknow, Uttar Pradesh, India
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fas fa-seedling"></i></div>
+          <div class="contact-detail-text">
+            <strong>Response Time</strong>
+            Within 24 hours — we value every message
+          </div>
+        </div>
+        <div class="social-row">
+          <a href="https://linkedin.com/in/anuragkumar" target="_blank" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/anuragkumar" target="_blank" class="social-btn" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://twitter.com/anuragkumar" target="_blank" class="social-btn" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://instagram.com/anuragkumar" target="_blank" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="contact-form-wrap reveal-right">
+        <form id="contactForm" novalidate>
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" placeholder="Anurag Kumar" required />
+            </div>
+            <div class="form-row">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Partnership opportunity, question…" />
+          </div>
+          <div class="form-row">
+            <label for="message">Your Message *</label>
+            <textarea id="message" name="message" placeholder="Share your thoughts, ideas, or how you'd like to collaborate…" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            Send Message &nbsp; 🌿
+          </button>
+          <div class="form-msg" id="formMsg"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONNECT WITH ME ══════════ -->
+  <section id="connect">
+    <div class="section-label reveal" style="justify-content:center; color:var(--fresh)">
+      <span style="background:var(--fresh);width:30px;height:1px;display:inline-block;margin-right:12px"></span>
+      Connect With Me
+    </div>
+    <h2 class="section-title reveal">Find me on <strong>social media</strong></h2>
+    <p class="connect-desc reveal">Let's collaborate, share ideas, and build something meaningful together. Follow my journey in sustainability and tech.</p>
+    <div class="connect-cards">
+      <a href="https://linkedin.com/in/anuragkumar" target="_blank" class="connect-card reveal">
+        <div class="connect-card-icon"><i class="fab fa-linkedin"></i></div>
+        <div class="connect-card-title">LinkedIn</div>
+        <div class="connect-card-handle">@anuragkumar</div>
+      </a>
+      <a href="https://github.com/anuragkumar" target="_blank" class="connect-card reveal">
+        <div class="connect-card-icon"><i class="fab fa-github"></i></div>
+        <div class="connect-card-title">GitHub</div>
+        <div class="connect-card-handle">@anuragkumar</div>
+      </a>
+      <a href="https://twitter.com/anuragkumar" target="_blank" class="connect-card reveal">
+        <div class="connect-card-icon"><i class="fab fa-x-twitter"></i></div>
+        <div class="connect-card-title">Twitter / X</div>
+        <div class="connect-card-handle">@anuragkumar</div>
+      </a>
+      <a href="https://instagram.com/anuragkumar" target="_blank" class="connect-card reveal">
+        <div class="connect-card-icon"><i class="fab fa-instagram"></i></div>
+        <div class="connect-card-title">Instagram</div>
+        <div class="connect-card-handle">@anuragkumar</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">🌿 Verdana</div>
+        <p class="footer-tagline">A premium sustainability and clean-air initiative committed to building a greener, more breathable world — one action at a time.</p>
+      </div>
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Initiatives</div>
+        <ul class="footer-links">
+          <li><a href="#services">Urban Forests</a></li>
+          <li><a href="#services">Air Monitoring</a></li>
+          <li><a href="#services">Watershed Restoration</a></li>
+          <li><a href="#services">Eco Education</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Follow</div>
+        <ul class="footer-links">
+          <li><a href="https://linkedin.com/in/anuragkumar" target="_blank">LinkedIn</a></li>
+          <li><a href="https://github.com/anuragkumar" target="_blank">GitHub</a></li>
+          <li><a href="https://twitter.com/anuragkumar" target="_blank">Twitter / X</a></li>
+          <li><a href="https://instagram.com/anuragkumar" target="_blank">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Verdana. All rights reserved.</p>
+      <p class="footer-made">✦ Made with 💚 by Anurag Kumar</p>
+    </div>
+  </footer>
+
+  <script>
+  (() => {
+    'use strict';
+
+    /* ── Loader ── */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 2600);
+    });
+
+    /* ── Custom Cursor ── */
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left  = mx + 'px';
+      dot.style.top   = my + 'px';
+    });
+    (function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a, button, .service-card, .pillar, .connect-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { ring.style.width = '56px'; ring.style.height = '56px'; ring.style.opacity = '0.3'; });
+      el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.6'; });
+    });
+
+    /* ── Floating Leaves ── */
+    const container = document.getElementById('leavesContainer');
+    const leafShapes = [
+      `<svg viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg"><path d="M20 45 Q5 30 8 15 Q15 2 20 5 Q25 2 32 15 Q35 30 20 45Z" fill="currentColor"/><line x1="20" y1="45" x2="20" y2="8" stroke="rgba(255,255,255,0.3)" stroke-width="1"/></svg>`,
+      `<svg viewBox="0 0 50 40" xmlns="http://www.w3.org/2000/svg"><path d="M5 35 Q20 5 45 8 Q35 25 5 35Z" fill="currentColor"/><line x1="5" y1="35" x2="42" y2="10" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/></svg>`,
+      `<svg viewBox="0 0 35 45" xmlns="http://www.w3.org/2000/svg"><path d="M18 42 Q3 25 6 10 Q18 0 28 12 Q36 25 18 42Z" fill="currentColor"/></svg>`
+    ];
+    const colors = ['#52b788','#40916c','#2d6a4f','#95d5b2','#74c69d'];
+    for (let i = 0; i < 12; i++) {
+      const el = document.createElement('div');
+      el.className = 'fl';
+      const size = 14 + Math.random() * 20;
+      const left = Math.random() * 100;
+      const dur  = 18 + Math.random() * 20;
+      const delay = Math.random() * -25;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      el.style.cssText = `width:${size}px;height:${size}px;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s;color:${color}`;
+      el.innerHTML = leafShapes[i % leafShapes.length];
+      container.appendChild(el);
+    }
+
+    /* ── Navbar scroll ── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ── Hamburger ── */
+    const hamburger = document.getElementById('hamburger');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navbar.classList.toggle('menu-open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navbar.classList.remove('menu-open');
+      });
+    });
+
+    /* ── Scroll Reveal ── */
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ── Stagger delays ── */
+    document.querySelectorAll('.services-grid .service-card').forEach((c, i) => { c.style.transitionDelay = `${i * 0.08}s`; });
+    document.querySelectorAll('.impact-card').forEach((c, i) => { c.style.transitionDelay = `${i * 0.1}s`; });
+    document.querySelectorAll('.connect-card').forEach((c, i) => { c.style.transitionDelay = `${i * 0.08}s`; });
+
+    /* ── Counters ── */
+    function animateCounter(el, target, suffix) {
+      const dur = 2000, step = 16;
+      const steps = dur / step;
+      let current = 0;
+      const inc = target / steps;
+      const timer = setInterval(() => {
+        current = Math.min(current + inc, target);
+        const display = target > 999 ? Math.round(current).toLocaleString() : Math.round(current);
+        el.textContent = display + (suffix || '');
+        if (current >= target) clearInterval(timer);
+      }, step);
+    }
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const target = parseInt(e.target.dataset.target);
+          const txt = e.target.textContent;
+          const hasPct = txt.includes('%');
+          const hasK   = txt.includes('k');
+          animateCounter(e.target, target, hasPct ? '%' : (hasK ? 'k' : ''));
+          counterObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+    /* ── Parallax hero ── */
+    const heroBg = document.querySelector('.hero-bg-pattern');
+    const heroGrid = document.querySelector('.hero-grid-lines');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (heroBg)   heroBg.style.transform   = `translateY(${y * 0.25}px)`;
+      if (heroGrid) heroGrid.style.transform  = `translateY(${y * 0.15}px)`;
+    }, { passive: true });
+
+    /* ── Contact Form ── */
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formMsg   = document.getElementById('formMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name    = form.name.value.trim();
+      const email   = form.email.value.trim();
+      const subject = form.subject.value.trim();
+      const message = form.message.value.trim();
+
+      if (!name || !email || !message) {
+        showMsg('Please fill in all required fields (Name, Email, Message).', 'error');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showMsg('Please enter a valid email address.', 'error');
+        return;
+      }
+
+      submitBtn.classList.add('loading');
+      submitBtn.textContent = 'Sending… 🌱';
+
+      try {
+        const res = await fetch('http://localhost:8080/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+        if (res.ok) {
+          showMsg('✅ Thank you, ' + name + '! Your message has been received. We\'ll get back to you within 24 hours. 🌿', 'success');
+          form.reset();
+        } else {
+          const err = await res.json().catch(() => ({}));
+          showMsg('⚠️ ' + (err.message || 'Something went wrong. Please try again.'), 'error');
+        }
+      } catch (err) {
+        // If backend not running, show demo success for preview
+        showMsg('✅ Message received! (Backend API at localhost:8080 — deploy the Spring Boot app to activate email sending.) 🌿', 'success');
+        form.reset();
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.innerHTML = 'Send Message &nbsp; 🌿';
+      }
+    });
+
+    function showMsg(text, type) {
+      formMsg.textContent = text;
+      formMsg.className = 'form-msg ' + type;
+      formMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    /* ── Smooth active nav ── */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.opacity = a.getAttribute('href') === '#' + current ? '1' : '0.8';
+      });
+    }, { passive: true });
+
+  })();
+  </script>
+</body>
+</html>
