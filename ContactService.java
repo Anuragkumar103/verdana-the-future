@@ -2,7 +2,7 @@ package com.verdana.contact.service;
 
 import com.verdana.contact.dto.ContactRequest;
 import com.verdana.contact.model.ContactMessage;
-import com.verdana.contact.repository.ContactRepository;
+import com.verdana.contact.repository.ContactRepository; 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.Optional;
  * Business service layer for contact form operations.
  * Handles persistence, email dispatch, and retrieval logic.
  *
- * @author Anurag Kumar
+ * @author Anurag Kumar 
  */
 @Service
 @RequiredArgsConstructor
