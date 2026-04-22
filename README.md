@@ -165,8 +165,8 @@ The contact form auto-connects to `http://localhost:8080/api/contact`.
 
 **Anurag Kumar**  
 📧 luckyanurag9045@gmail.com  
-💼 [LinkedIn](https://linkedin.com/in/anuragkumar)  
-🐙 [GitHub](https://github.com/anuragkumar)
+💼 [LinkedIn](https://www.linkedin.com/in/anurag-kumar-1b967729b/)  
+🐙 [GitHub](https://github.com/anuragkumar103)
 
 ---
 
