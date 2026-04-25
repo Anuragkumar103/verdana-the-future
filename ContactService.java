@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ContactService {
+public class ContactService { 
 
     private final ContactRepository  contactRepository;
     private final EmailService        emailService;
