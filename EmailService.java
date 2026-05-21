@@ -29,10 +29,10 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    @Value("${verdana.mail.to:luckyanurag9045@gmail.com}")
+    @Value("${verdana.mail.to:luckyanurag9045@gmail.com}") 
     private String ownerEmail;
 
-    @Value("${verdana.mail.from:noreply@verdana.eco}")
+    @Value("${verdana.mail.from:noreply@verdana.eco}") 
     private String fromEmail;
 
     private static final DateTimeFormatter FMT =
