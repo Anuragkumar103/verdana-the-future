@@ -28,7 +28,7 @@ verdana/
         │   └── exception/GlobalExceptionHandler.java ← Clean error handling
         └── resources/
             ├── application.properties           ← Config (DB, mail, etc.)
-            └── schema.sql                       ← MySQL DDL
+            └── schema.sql                       ← MySQL DDL 
 ```
 
 ---
