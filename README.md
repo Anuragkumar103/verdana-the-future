@@ -11,7 +11,7 @@
 verdana/
 ├── index.html                   ← Frontend (single HTML file, zero dependencies)
 └── verdana-backend/             ← Spring Boot backend
-    ├── pom.xml
+    ├── pom.xml 
     └── src/main/
         ├── java/com/verdana/contact/
         │   ├── VerdanaApplication.java          ← Entry point
