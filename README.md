@@ -83,7 +83,7 @@ spring.mail.username=luckyanurag9045@gmail.com
 spring.mail.password=YOUR_16_CHAR_APP_PASSWORD
 ```
 
-### 3 — Run Backend
+### 3 — Run Backend .. 
 ```bash
 cd verdana-backend
 ./mvnw spring-boot:run
